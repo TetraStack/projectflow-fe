@@ -16,14 +16,16 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { useSignUpMutation } from "@/hooks/use-auth";
 import { signInSchema, signUpSchema } from "@/lib/schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router";
+import { toast } from "sonner";
 import * as z from "zod";
 
-type SignUpFormData = z.infer<typeof signUpSchema>;
+export type SignUpFormData = z.infer<typeof signUpSchema>;
 
 const SignUp = () => {
   const form = useForm({
@@ -36,12 +38,21 @@ const SignUp = () => {
     },
   });
 
+  const { mutate: register, isPending } = useSignUpMutation();
+
   const onSubmit = (values: SignUpFormData) => {
-    console.log(values);
+    register(values, {
+      onSuccess: () => {
+        toast.success("Account created successfully");
+      },
+      onError: (error) => {
+        toast.error(error.message);
+      },
+    });
   };
   return (
     <div className="flex flex-col items-center justify-center  p-4 h-screen bg-background">
-      <Card className="w-full shadow-xl max-w-md">
+      <Card className="w-full max-w-md">
         <CardHeader className="text-center">
           <CardTitle className="text-2xl font-bold ">Welcome back</CardTitle>
           <CardDescription className="text-sm text-muted-foreground px-0">
@@ -111,8 +122,12 @@ const SignUp = () => {
                 )}
               />
 
-              <Button type="submit" className="w-full">
-                Sign up
+              <Button
+                disabled={isPending}
+                type="submit"
+                className="w-full cursor-pointer"
+              >
+                {isPending ? "Signing up..." : "Sign up"}
               </Button>
             </form>
           </Form>
