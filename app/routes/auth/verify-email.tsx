@@ -30,8 +30,6 @@ const VerifyEmail = () => {
   }, [searchParamas]);
   return (
     <div className="flex flex-col items-center justify-center h-screen bg-background">
-      <h1 className="text-2xl font-bold">Verify Email</h1>
-      <p className="text-sm text-gray-500">Verifying your email...</p>
       <Card className="max-w-md w-full">
         <CardContent>
           <div className="flex flex-col items-center justify-center py-6">

@@ -8,7 +8,7 @@ const AuthLayout = () => {
 
   if (isLoading) return <Loader className="size-5 animate-spin"></Loader>;
 
-  if (isAuthenticated) <Navigate to="/dashboard" />;
+  if (isAuthenticated) return <Navigate to="/dashboard" />;
 
   return <Outlet />;
 };

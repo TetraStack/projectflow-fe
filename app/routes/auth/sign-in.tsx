@@ -16,14 +16,25 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { useSignInMutation } from "@/hooks/use-auth";
 import { signInSchema } from "@/lib/schema";
+import { useAuth } from "@/provider/auth-context";
 import { zodResolver } from "@hookform/resolvers/zod";
-import React from "react";
+import { Eye } from "lucide-react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router";
+import { toast } from "sonner";
 import * as z from "zod";
 
-type SignInFormData = z.infer<typeof signInSchema>;
+export type SignInFormData = z.infer<typeof signInSchema>;
+
+const UserSchema = z.object({
+  _id: z.string(),
+  email: z.string().email(),
+  name: z.string(),
+  isEmailverified: z.boolean(),
+});
 
 const SignIn = () => {
   const form = useForm({
@@ -34,8 +45,20 @@ const SignIn = () => {
     },
   });
 
+  const [showPassword, setShowPassword] = useState<boolean>(false);
+  const { login } = useAuth();
+  const { mutate: signIn, isPending } = useSignInMutation();
+
   const onSubmit = (value: SignInFormData) => {
-    console.log(value);
+    signIn(value, {
+      onSuccess: (data) => {
+        const userData = UserSchema.parse(data);
+
+        login(userData);
+        toast.success("Login Successfully");
+      },
+      onError: (error) => toast.error(error as unknown as string),
+    });
   };
   return (
     <div className="flex flex-col items-center justify-center  p-4 h-screen bg-background">
@@ -83,15 +106,28 @@ const SignIn = () => {
                       </Link>
                     </div>
                     <FormControl>
-                      <Input type="password" placeholder="******" {...field} />
+                      <div className="relative ">
+                        <Input
+                          type={showPassword ? "text" : "password"}
+                          placeholder="******"
+                          {...field}
+                          className="relative"
+                        ></Input>
+                        <Eye
+                          className="absolute right-2 top-2 cursor-pointer"
+                          onClick={() => {
+                            setShowPassword(!showPassword);
+                          }}
+                        />
+                      </div>
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
 
-              <Button type="submit" className="w-full">
-                Sign in
+              <Button type="submit" className="w-full cursor-pointer">
+                {isPending ? "Signing in..." : "Sign in"}
               </Button>
             </form>
           </Form>

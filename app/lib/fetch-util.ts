@@ -16,13 +16,14 @@ api.interceptors.response.use((response) => response, (error) => {
         window.dispatchEvent(new Event("force-logout"))
     }
 
-    return Promise.reject(error)
+    const errorMessage = error.response.data.message || "Something went wrong"
+
+    return Promise.reject(errorMessage)
 })
 
 export const postData = async<T>(path: string, data: unknown): Promise<T> => {
     const res = await api.post(path, data)
 
-    console.log(res.data)
     return res.data.data
 }
 

@@ -1,11 +1,15 @@
 import type { User } from "@/types";
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
+import { queryClient } from "./react-query-provider";
+import { useLocation, useNavigation } from "react-router";
+import { publicRoutes } from "@/lib";
+import { useCheckUser } from "@/hooks/use-auth";
 
 interface AuthContextType {
   user: User | null;
   isAuthenticated: boolean;
   isLoading: boolean;
-  login: (email: string, password: string) => Promise<void>;
+  login: (data: User) => Promise<void>;
   logout: () => Promise<void>;
 }
 
@@ -16,8 +20,32 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const login = async (email: string, password: string) => {};
-  const logout = async () => {};
+  const { data, isLoading: queryLoading } = useCheckUser();
+
+  useEffect(() => {
+    if (queryLoading) {
+      setIsLoading(true);
+      return;
+    }
+    if (data) {
+      setUser(data as User);
+      setIsAuthenticated(true);
+    } else {
+      setUser(null);
+      setIsAuthenticated(false);
+    }
+    setIsLoading(false);
+  }, [data, queryLoading]);
+
+  const login = async (data: User) => {
+    setUser(data);
+    setIsAuthenticated(true);
+  };
+  const logout = async () => {
+    setUser(null);
+    setIsAuthenticated(false);
+    queryClient.clear();
+  };
 
   return (
     <AuthContext.Provider
