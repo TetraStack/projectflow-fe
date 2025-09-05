@@ -43,7 +43,10 @@ const SignUp = () => {
   const onSubmit = (values: SignUpFormData) => {
     register(values, {
       onSuccess: () => {
-        toast.success("Account created successfully");
+        toast.success("Email Verifcation Required", {
+          description:
+            "Please check your email for a verification link. If you don't see it, Please check your spam folder.",
+        });
       },
       onError: (error) => {
         toast.error(error.message);

@@ -21,6 +21,8 @@ api.interceptors.response.use((response) => response, (error) => {
 
 export const postData = async<T>(path: string, data: unknown): Promise<T> => {
     const res = await api.post(path, data)
+
+    console.log(res.data)
     return res.data.data
 }
 
