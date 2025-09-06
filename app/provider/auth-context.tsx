@@ -1,5 +1,5 @@
 import type { User } from "@/types";
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, use, useContext, useEffect, useState } from "react";
 import { queryClient } from "./react-query-provider";
 import { useLocation, useNavigation } from "react-router";
 import { publicRoutes } from "@/lib";
@@ -36,6 +36,19 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     }
     setIsLoading(false);
   }, [data, queryLoading]);
+
+  useEffect(() => {
+    const handleForceLogout = () => {
+      setUser(null);
+      setIsAuthenticated(false);
+    };
+
+    window.addEventListener("force-logout", handleForceLogout);
+
+    return () => {
+      window.removeEventListener("force-logout", handleForceLogout);
+    };
+  }, []);
 
   const login = async (data: User) => {
     setUser(data);
