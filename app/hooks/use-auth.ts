@@ -1,4 +1,5 @@
 import { getData, postData } from "@/lib/fetch-util";
+import type { ForgotPasswordFormData } from "@/routes/auth/forgot-password";
 import type { SignInFormData } from "@/routes/auth/sign-in";
 import type { SignUpFormData } from "@/routes/auth/sign-up";
 import { useMutation, useQuery } from "@tanstack/react-query";
@@ -33,5 +34,11 @@ export const useCheckUser = () => {
 export const useLogoutMutation = () => {
     return useMutation({
         mutationFn: () => postData("/auth/logout")
+    })
+}
+
+export const useForgotPasswordMutation = () => {
+    return useMutation({
+        mutationFn: (data: ForgotPasswordFormData) => postData("/auth/reset-password-request", data)
     })
 }

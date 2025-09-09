@@ -8,14 +8,12 @@ const AuthLayout = () => {
 
   if (isLoading)
     return (
-      <div className="flex justify-center items-center h-screen">
-        <Loader className="size-5 animate-spin"></Loader>
+      <div className="flex justify-center items-center h-screen bg-background">
+        <Loader className="size-10 animate-spin text-primary"></Loader>
       </div>
     );
 
   if (isAuthenticated) return <Navigate to="/dashboard" />;
-
- 
 
   return <Outlet />;
 };
