@@ -23,7 +23,7 @@ api.interceptors.response.use((response) => response, (error) => {
     return Promise.reject(errorMessage)
 })
 
-export const postData = async<T>(path: string, data: unknown): Promise<T> => {
+export const postData = async<T>(path: string, data?: unknown): Promise<T> => {
     const res = await api.post(path, data)
 
     return res.data.data

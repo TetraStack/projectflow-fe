@@ -1,9 +1,7 @@
 import type { User } from "@/types";
 import { createContext, use, useContext, useEffect, useState } from "react";
 import { queryClient } from "./react-query-provider";
-import { useLocation, useNavigation } from "react-router";
-import { publicRoutes } from "@/lib";
-import { useCheckUser } from "@/hooks/use-auth";
+import { useCheckUser, useLogoutMutation } from "@/hooks/use-auth";
 
 interface AuthContextType {
   user: User | null;
@@ -19,8 +17,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-
   const { data, isLoading: queryLoading } = useCheckUser();
+  const logoutMutation = useLogoutMutation();
 
   useEffect(() => {
     if (queryLoading) {
@@ -55,9 +53,12 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     setIsAuthenticated(true);
   };
   const logout = async () => {
+    setIsLoading(true);
+    await logoutMutation.mutateAsync();
     setUser(null);
     setIsAuthenticated(false);
     queryClient.clear();
+    setIsLoading(false);
   };
 
   return (

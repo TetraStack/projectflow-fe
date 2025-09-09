@@ -29,3 +29,9 @@ export const useCheckUser = () => {
         queryFn: () => getData("/auth")
     })
 }
+
+export const useLogoutMutation = () => {
+    return useMutation({
+        mutationFn: () => postData("/auth/logout")
+    })
+}

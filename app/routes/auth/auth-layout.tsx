@@ -1,10 +1,10 @@
 import { useAuth } from "@/provider/auth-context";
 import { Loader } from "lucide-react";
-import React from "react";
+import React, { useEffect } from "react";
 import { Navigate, Outlet } from "react-router";
 
 const AuthLayout = () => {
-  const { isAuthenticated, isLoading } = useAuth();
+  const { isAuthenticated, isLoading, user } = useAuth();
 
   if (isLoading)
     return (
@@ -14,6 +14,8 @@ const AuthLayout = () => {
     );
 
   if (isAuthenticated) return <Navigate to="/dashboard" />;
+
+ 
 
   return <Outlet />;
 };
