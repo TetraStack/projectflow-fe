@@ -25,9 +25,15 @@ export const useSignInMutation = () => {
 }
 
 export const useCheckUser = () => {
+    console.log("Checked user")
     return useQuery({
         queryKey: ["user"],
-        queryFn: () => getData("/auth")
+        queryFn: () => getData("/auth"),
+        staleTime: 5 * 60 * 1000,
+        gcTime: 10 * 60 * 1000,
+        retry: 1,
+        refetchOnWindowFocus: false,
+        refetchOnMount: false
     })
 }
 

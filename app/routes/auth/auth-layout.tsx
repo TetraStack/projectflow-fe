@@ -4,7 +4,7 @@ import React, { useEffect } from "react";
 import { Navigate, Outlet } from "react-router";
 
 const AuthLayout = () => {
-  const { isAuthenticated, isLoading, user } = useAuth();
+  const { isAuthenticated, isLoading } = useAuth();
 
   if (isLoading)
     return (
@@ -13,7 +13,7 @@ const AuthLayout = () => {
       </div>
     );
 
-  if (isAuthenticated) return <Navigate to="/dashboard" />;
+  if (isAuthenticated) return <Navigate to="/dashboard" replace />;
 
   return <Outlet />;
 };

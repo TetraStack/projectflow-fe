@@ -14,56 +14,28 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-  const [user, setUser] = useState<User | null>(null);
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const { data, isLoading: queryLoading } = useCheckUser();
+  const { data: user, isLoading, error } = useCheckUser();
   const logoutMutation = useLogoutMutation();
 
-  useEffect(() => {
-    if (queryLoading) {
-      setIsLoading(true);
-      return;
-    }
-    if (data) {
-      setUser(data as User);
-      setIsAuthenticated(true);
-    } else {
-      setUser(null);
-      setIsAuthenticated(false);
-    }
-    setIsLoading(false);
-  }, [data, queryLoading]);
-
-  useEffect(() => {
-    const handleForceLogout = () => {
-      setUser(null);
-      setIsAuthenticated(false);
-    };
-
-    window.addEventListener("force-logout", handleForceLogout);
-
-    return () => {
-      window.removeEventListener("force-logout", handleForceLogout);
-    };
-  }, []);
+  const isAuthenticated = !!user && !error;
 
   const login = async (data: User) => {
-    setUser(data);
-    setIsAuthenticated(true);
+    queryClient.setQueryData(["user"], data);
   };
   const logout = async () => {
-    setIsLoading(true);
     await logoutMutation.mutateAsync();
-    setUser(null);
-    setIsAuthenticated(false);
     queryClient.clear();
-    setIsLoading(false);
   };
 
   return (
     <AuthContext.Provider
-      value={{ user, isAuthenticated, isLoading, login, logout }}
+      value={{
+        user: (user as User) || null,
+        isAuthenticated,
+        isLoading,
+        login,
+        logout,
+      }}
     >
       {children}
     </AuthContext.Provider>
