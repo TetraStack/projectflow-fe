@@ -48,3 +48,12 @@ export const useForgotPasswordMutation = () => {
         mutationFn: (data: ForgotPasswordFormData) => postData("/auth/reset-password-request", data)
     })
 }
+
+export const useResetpasswordMutation = () => {
+    return useMutation({
+        mutationFn: (data: {
+            token: string,
+            password: string
+        }) => postData("/auth/reset-passowrd", data)
+    })
+}
