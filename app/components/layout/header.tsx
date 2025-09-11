@@ -38,7 +38,7 @@ const Header: React.FC<Props> = ({
   const { user, logout } = useAuth();
   const workspaces: Workspace[] = [];
   return (
-    <div className="bg-background sticky top-0 z-40 border-b border-dashed">
+    <div className="bg-background sticky top-0 z-40 border-b-3 border-dashed">
       <div className="flex items-center gap-2 h-14 justify-between px-4 sm:px-6 lg:px-8 py-4">
         <div>
           <DropdownMenu>

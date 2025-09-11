@@ -47,10 +47,6 @@ const DashBoardLayout = ({ children }: DashBoardLayoutProps) => {
           </div>
         </main>
       </div>
-      {/* <Button className="cursor-pointer" onClick={logout} disabled={isLoading}>
-        Logout
-        <LogOut className="size-4" />
-      </Button> */}
     </div>
   );
 };
