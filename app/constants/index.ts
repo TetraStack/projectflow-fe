@@ -32,3 +32,18 @@ export const navItems = [
         icon: Settings
     }
 ]
+
+export const colorOptionsForWrokspaces = [
+    "#FF5733",
+    "#33FF57",
+    "#3357FF",
+    "#FF33A8",
+    "#FFD433",
+    "#33FFF5",
+    "#9D33FF",
+    "#FF8F33",
+    "#33FF8F",
+    "#FF3333",
+    "#338FFF",
+
+];

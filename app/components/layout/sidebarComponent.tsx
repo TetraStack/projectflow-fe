@@ -3,16 +3,10 @@ import { cn } from "@/lib/utils";
 import { useAuth } from "@/provider/auth-context";
 import type { Workspace } from "@/types";
 import {
-  ArrowLeftToLine,
-  ArrowLeftToLineIcon,
-  ArrowRightToLine,
-  ArrowRightToLineIcon,
   ChevronLeftCircle,
   ChevronRightCircle,
   LogOut,
-  SquareDashedKanban,
   SquareKanban,
-  Wrench,
 } from "lucide-react";
 import React, { useState } from "react";
 import { Link } from "react-router";
@@ -35,13 +29,13 @@ const SidebarComponent: React.FC<Props> = ({ currentWorkspace }) => {
       )}
     >
       <Button
-        className="absolute -right-6 bottom-15 z-50 cursor-pointer hidden md:block"
+        className="absolute -right-6 bottom-15 z-50 cursor-pointer hidden md:block text-muted-foreground"
         variant={"ghost"}
         size={"icon"}
         onClick={() => setIsCollapsed(!isCollapsed)}
       >
         {isCollapsed ? (
-          <ChevronRightCircle className="size-6" />
+          <ChevronRightCircle className="size-6 " />
         ) : (
           <ChevronLeftCircle className="size-6" />
         )}
