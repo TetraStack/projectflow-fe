@@ -25,6 +25,8 @@ import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
 import { cn } from "@/lib/utils";
 import { Button } from "../ui/button";
+import { useCreateWorkspaceMutation } from "@/hooks/use-workspace";
+import { toast } from "sonner";
 
 interface Props {
   isCreatingWorkspace: boolean;
@@ -46,8 +48,18 @@ const CreateWorkspace: React.FC<Props> = ({
     },
   });
 
+  const { mutate: createWorkspace } = useCreateWorkspaceMutation();
+
   const onSubmit = (data: WorkSpaceForm) => {
     console.log(data);
+    createWorkspace(data, {
+      onSuccess: (data) => {
+        console.log(data);
+        toast.success("Workspace is created");
+      },
+      onError: (error) => toast.error(error + ""),
+    });
+    setIsCreatingWorkspace(false);
   };
   return (
     <Dialog

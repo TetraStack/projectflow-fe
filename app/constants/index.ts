@@ -34,7 +34,7 @@ export const navItems = [
 ]
 
 export const colorOptionsForWrokspaces = [
-    "#FF5733",
+    "#e78a53",
     "#33FF57",
     "#3357FF",
     "#FF33A8",
