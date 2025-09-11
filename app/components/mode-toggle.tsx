@@ -16,11 +16,7 @@ export function ModeToggle() {
   };
 
   return (
-    <Button
-      onClick={toogleTheme}
-      variant={"ghost"}
-      className="cursor-pointer absolute z-99 right-0"
-    >
+    <Button onClick={toogleTheme} variant={"ghost"} className="cursor-pointer ">
       <Sun className="size-5 hidden dark:block" />
       <Moon className="size-5 block dark:hidden " />
     </Button>

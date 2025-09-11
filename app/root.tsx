@@ -37,7 +37,6 @@ export function Layout({ children }: { children: React.ReactNode }) {
       </head>
       <body className="h-screen">
         <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-          <ModeToggle />
           {children}
           <ScrollRestoration />
           <Scripts />
