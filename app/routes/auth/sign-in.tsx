@@ -23,7 +23,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Eye } from "lucide-react";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { toast } from "sonner";
 import * as z from "zod";
 
@@ -37,6 +37,7 @@ const UserSchema = z.object({
 });
 
 const SignIn = () => {
+  const navigate = useNavigate();
   const form = useForm({
     resolver: zodResolver(signInSchema),
     defaultValues: {
@@ -56,6 +57,7 @@ const SignIn = () => {
 
         login(userData);
         toast.success("Login Successfully");
+        navigate("/dashboard");
       },
       onError: (error) => toast.error(error as unknown as string),
     });

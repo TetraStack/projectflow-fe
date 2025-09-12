@@ -21,7 +21,7 @@ import {
 } from "../ui/dropdown-menu";
 import { Avatar, AvatarImage } from "../ui/avatar";
 import { ModeToggle } from "../mode-toggle";
-import { Link } from "react-router";
+import { Link, useLoaderData } from "react-router";
 import WorkspaceAvatar from "../workspace/workspace-avatar";
 
 interface Props {
@@ -36,10 +36,13 @@ const Header: React.FC<Props> = ({
   onCreateWorkspace,
 }) => {
   const { user, logout } = useAuth();
-  const workspaces: Workspace[] = [];
+  const { workspaces } = useLoaderData() as {
+    workspaces: Workspace[];
+  };
+
   return (
-    <div className="bg-background sticky top-0 z-40 border-b-3 border-dashed">
-      <div className="flex items-center gap-2 h-14 justify-between px-4 sm:px-6 lg:px-8 py-4">
+    <div className="bg-background sticky  top-0 z-40 border-b-3 border-dashed">
+      <div className="flex items-center gap-2 h-14 justify-between px-2 sm:px-6 py-4 container mx-auto">
         <div>
           <DropdownMenu>
             <DropdownMenuTrigger className="flex border  p-2 rounded-lg cursor-pointer text-sm items-center">
@@ -51,7 +54,9 @@ const Header: React.FC<Props> = ({
                       name={selectedWorkspace.name}
                     />
                   )}
-                  <span className="font-medium">{selectedWorkspace.name}</span>
+                  <span className="font-medium ml-2">
+                    {selectedWorkspace.name}
+                  </span>
                 </>
               ) : (
                 <span className="font-medium">Select Workspace</span>
@@ -74,7 +79,7 @@ const Header: React.FC<Props> = ({
                       />
                     )}
 
-                    <span className="ml-2">{workspace.name}</span>
+                    <span className="ml-2 capitalize">{workspace.name}</span>
                   </DropdownMenuItem>
                 ))}
               </DropdownMenuGroup>

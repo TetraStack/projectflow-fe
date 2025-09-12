@@ -3,6 +3,7 @@ import SidebarComponent from "@/components/layout/sidebarComponent";
 import { Button } from "@/components/ui/button";
 import CreateWorkspace from "@/components/workspace/create-workspace";
 import { useLogoutMutation } from "@/hooks/use-auth";
+import { getData } from "@/lib/fetch-util";
 import { useAuth } from "@/provider/auth-context";
 import type { Workspace } from "@/types";
 import { LogOut } from "lucide-react";
@@ -13,8 +14,18 @@ interface DashBoardLayoutProps {
   children: React.ReactNode;
 }
 
+export const clientLoader = async () => {
+  try {
+    const [workspaces] = await Promise.all([getData("/workspace")]);
+
+    return { workspaces };
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 const DashBoardLayout = ({ children }: DashBoardLayoutProps) => {
-  const { user, logout, isLoading } = useAuth();
+  const { user, logout, isLoading, isAuthenticated } = useAuth();
   const [isCreatingWorkspace, setIsCreatingWorkspace] = useState(false);
   const [currentWorkspace, setCurrentWorkspace] = useState<Workspace | null>(
     null
@@ -23,10 +34,14 @@ const DashBoardLayout = ({ children }: DashBoardLayoutProps) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!user) {
+    if (!isLoading && !user) {
       navigate("sign-in");
     }
   }, [user]);
+
+  if (!isAuthenticated && !isLoading) {
+    return <Navigate to="/sign-in" />;
+  }
 
   const handleWorkspaceSelected = (workspace: Workspace) => {
     setCurrentWorkspace(workspace);

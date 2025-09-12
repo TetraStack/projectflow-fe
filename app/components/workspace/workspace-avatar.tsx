@@ -13,8 +13,8 @@ const WorkspaceAvatar: React.FC<Props> = ({ color, name }) => {
         backgroundColor: color,
       }}
     >
-      <span className="capitalize text-xs font-medium text-foreground">
-        {name}
+      <span className="capitalize  flex items-center text-xs font-medium text-background ">
+        {name[0]}
       </span>
     </div>
   );

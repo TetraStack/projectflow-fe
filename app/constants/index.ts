@@ -22,8 +22,8 @@ export const navItems = [
         icon: Users
     },
     {
-        title: "Achived",
-        href: "/achieved",
+        title: "Archived",
+        href: "/archived",
         icon: CheckCircle2
     },
     {
@@ -47,3 +47,14 @@ export const colorOptionsForWrokspaces = [
     "#338FFF",
 
 ];
+
+export const PUBLIC_AUTH_PATHS = [
+    "/",
+    "/sign-in",
+    "/sign-up",
+    "/verify-email",
+    "/reset-password",
+    "/forgot-password",
+    "*",
+
+]

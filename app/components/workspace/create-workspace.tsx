@@ -27,11 +27,15 @@ import { cn } from "@/lib/utils";
 import { Button } from "../ui/button";
 import { useCreateWorkspaceMutation } from "@/hooks/use-workspace";
 import { toast } from "sonner";
+import type { Workspace } from "@/types";
+import { useNavigate } from "react-router";
 
 interface Props {
   isCreatingWorkspace: boolean;
   setIsCreatingWorkspace: React.Dispatch<React.SetStateAction<boolean>>;
 }
+
+type WorkspaceResponse = { workspace: Workspace };
 
 export type WorkSpaceForm = z.infer<typeof workspaceSchema>;
 
@@ -49,13 +53,15 @@ const CreateWorkspace: React.FC<Props> = ({
   });
 
   const { mutate: createWorkspace } = useCreateWorkspaceMutation();
+  const navigate = useNavigate();
 
-  const onSubmit = (data: WorkSpaceForm) => {
-    console.log(data);
+  const onSubmit = async (data: WorkSpaceForm) => {
     createWorkspace(data, {
       onSuccess: (data) => {
-        console.log(data);
+        const createdWorkspace = (data as WorkspaceResponse).workspace;
+        form.reset();
         toast.success("Workspace is created");
+        navigate(`workspaces/${createdWorkspace._id}`);
       },
       onError: (error) => toast.error(error + ""),
     });
@@ -68,7 +74,7 @@ const CreateWorkspace: React.FC<Props> = ({
       modal={true}
     >
       <DialogContent className="max-h-[80vh] overflow-y-auto">
-        <DialogHeader>Create Workspace</DialogHeader>
+        <DialogTitle>Create Workspace</DialogTitle>
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}

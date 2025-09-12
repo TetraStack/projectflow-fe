@@ -37,6 +37,8 @@ const SidebarNav: React.FC<Props> = ({
             navigate(href);
           } else if (currentWorkspace && currentWorkspace._id) {
             navigate(`${href}/${currentWorkspace._id}`);
+          } else {
+            navigate(href);
           }
         };
         return (
