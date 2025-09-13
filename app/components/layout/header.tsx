@@ -23,6 +23,7 @@ import { Avatar, AvatarImage } from "../ui/avatar";
 import { ModeToggle } from "../mode-toggle";
 import { Link, useLoaderData } from "react-router";
 import WorkspaceAvatar from "../workspace/workspace-avatar";
+import { withOpacity } from "../workspace/workspace-card";
 
 interface Props {
   onWorkspaceSelected: (workspace: Workspace) => void;
@@ -36,16 +37,22 @@ const Header: React.FC<Props> = ({
   onCreateWorkspace,
 }) => {
   const { user, logout } = useAuth();
-  const { workspaces } = useLoaderData() as {
-    workspaces: Workspace[];
-  };
+  const data = useLoaderData() as { workspaces: Workspace[] };
+  const workspaces = data?.workspaces ?? [];
 
   return (
-    <div className="bg-background sticky  top-0 z-40 border-b-3 border-dashed">
+    <div className="bg-background sticky  top-0 z-40 border-b-3 border-dashed border-primary/20">
       <div className="flex items-center gap-2 h-14 justify-between px-2 sm:px-6 py-4 container mx-auto">
         <div>
           <DropdownMenu>
-            <DropdownMenuTrigger className="flex border  p-2 rounded-lg cursor-pointer text-sm items-center">
+            <DropdownMenuTrigger
+              className={
+                "flex border  p-2 rounded-lg cursor-pointer text-sm items-center"
+              }
+              style={{
+                borderColor: withOpacity(selectedWorkspace?.color, 0.4),
+              }}
+            >
               {selectedWorkspace ? (
                 <>
                   {selectedWorkspace.color && (

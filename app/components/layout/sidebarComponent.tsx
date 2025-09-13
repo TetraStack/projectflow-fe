@@ -24,7 +24,7 @@ const SidebarComponent: React.FC<Props> = ({ currentWorkspace }) => {
   return (
     <div
       className={cn(
-        "relative  border-dashed border-r-3 flex flex-col  bg-sidebar transition-all duration-300",
+        "relative  border-dashed border-r-3 flex flex-col  bg-sidebar  border-primary/20 transition-all duration-300",
         isCollapsed ? "w-16 md:w[80px]" : "w-16 md:w-[240px]"
       )}
     >
@@ -42,7 +42,7 @@ const SidebarComponent: React.FC<Props> = ({ currentWorkspace }) => {
       </Button>
 
       {/* projectflow logo */}
-      <div className="h-14 border-b-3 border-dashed flex items-center px-4 mt-0.5 mb-4">
+      <div className="h-14 border-b-3 border-dashed border-primary/20 flex items-center px-4 mt-0.5 mb-4">
         <Link to="/dashboard" className="flex items-center">
           {!isCollapsed && (
             <div className="flex items-center gap-2 text-primary">

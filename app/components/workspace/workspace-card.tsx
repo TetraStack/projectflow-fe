@@ -41,7 +41,7 @@ const WorkspaceCard: React.FC<Props> = ({ workspace }) => {
           </div>
 
           <CardDescription>
-            {workspace.description || "No Description"}
+            {`${workspace.description?.slice(0, 150)}...` || "No Description"}
           </CardDescription>
         </CardHeader>
 
@@ -55,7 +55,7 @@ const WorkspaceCard: React.FC<Props> = ({ workspace }) => {
   );
 };
 
-function withOpacity(hex: string, opacity: number) {
+export function withOpacity(hex: string = "", opacity: number) {
   const alpha = Math.round(opacity * 255)
     .toString(16)
     .padStart(2, "0");

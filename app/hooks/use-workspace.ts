@@ -16,3 +16,10 @@ export const useGetWorkspaces = () => {
         queryFn: async () => getData("/workspace")
     })
 }
+
+export const useGetWorkSpaceDetails = (workspaceId: string) => {
+    return useQuery({
+        queryFn: async () => getData(`/workspace/workspace-details/${workspaceId}`),
+        queryKey: ['workspace', workspaceId]
+    })
+}
