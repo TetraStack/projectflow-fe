@@ -1,3 +1,4 @@
+import { ProjectStatus } from "@/types"
 import * as z from "zod"
 
 export const signInSchema = z.object({
@@ -32,3 +33,20 @@ export const workspaceSchema = z.object({
     color: z.string().min(3, "Color should be atlest 3 character"),
     description: z.string().optional()
 })
+
+export const projectSchema = z.object({
+    title: z.string().min(1, "Please provide title"),
+    description: z.string().optional(),
+    status: z.nativeEnum(ProjectStatus),
+    startDate: z.string().min(1, "Please provide start date"),
+    dueDate: z.string().min(1, "Please provide due date"),
+    members: z.array(z.object({
+        user: z.string().min(1, "Please provide user"),
+        role: z.enum(["admin", "member", "owner", "viewer"])
+    })).optional(),
+    tags: z.string().optional()
+}).refine(val => val.startDate < val.dueDate, {
+    path: ["startDate"],
+    message: "Start date should be before due date"
+})
+

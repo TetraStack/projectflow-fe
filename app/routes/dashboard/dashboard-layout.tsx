@@ -58,7 +58,7 @@ const DashBoardLayout = ({ children }: DashBoardLayoutProps) => {
           onCreateWorkspace={() => setIsCreatingWorkspace(true)}
         />
         <main className="flex-1 overflow-y-auto h-full w-full">
-          <div className="mx-auto container px-2 sm:px-6 lg:py-8 py-0 md:py-8">
+          <div className="mx-auto container px-2 sm:px-6 lg:py-8 py-4 md:py-8">
             {<Outlet />}
           </div>
         </main>
