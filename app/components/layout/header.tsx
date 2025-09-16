@@ -105,7 +105,7 @@ const Header: React.FC<Props> = ({
           </Button>
 
           <DropdownMenu>
-            <DropdownMenuTrigger>
+            <DropdownMenuTrigger asChild>
               <Button variant={"ghost"} size={"icon"}>
                 {user?.profilePicture ? (
                   <Avatar>

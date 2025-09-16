@@ -42,7 +42,7 @@ export const projectSchema = z.object({
     dueDate: z.string().min(1, "Please provide due date"),
     members: z.array(z.object({
         user: z.string().min(1, "Please provide user"),
-        role: z.enum(["admin", "member", "owner", "viewer"])
+        role: z.enum(["manager", "contributor", "viewer"])
     })).optional(),
     tags: z.string().optional()
 }).refine(val => val.startDate < val.dueDate, {
