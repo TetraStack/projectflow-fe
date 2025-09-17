@@ -87,6 +87,7 @@ const CreateProject: React.FC<Props> = ({
         onSuccess: () => {
           form.reset();
           toast.success("Project has beeen added");
+          setIsCreatingProject(false);
         },
         onError: (error) => toast.error(error + ""),
       }

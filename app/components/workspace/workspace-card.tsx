@@ -40,7 +40,7 @@ const WorkspaceCard: React.FC<Props> = ({ workspace }) => {
             </div>
           </div>
 
-          <CardDescription className="line-clamp-5">
+          <CardDescription className="line-clamp-4">
             {`${workspace.description}` || "No Description"}
           </CardDescription>
         </CardHeader>

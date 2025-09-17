@@ -4,7 +4,7 @@ import { useGetWorkspaceProjects } from "@/hooks/use-workspace";
 import type { Project, Workspace } from "@/types";
 import React, { useState } from "react";
 import { useParams } from "react-router";
-import ProjectList from "../projects/ProjectList";
+import ProjectList from "../projects/project-list";
 import CreateWorkspace from "@/components/workspace/create-workspace";
 import CreateProject from "@/components/workspace/create-project";
 

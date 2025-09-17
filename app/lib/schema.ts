@@ -50,3 +50,12 @@ export const projectSchema = z.object({
     message: "Start date should be before due date"
 })
 
+export const createTaskSchema = z.object({
+    title: z.string().min(1, "Please provide Title"),
+    description: z.string().optional(),
+    status: z.enum(["To Do", "In Progress", "Done"]),
+    priority: z.enum(["Low", "Medium", "High"]),
+    dueDate: z.string().min(1, "Due date is required"),
+    assignees: z.array(z.string()).min(1, "At least one assignee is required").optional(),
+})
+

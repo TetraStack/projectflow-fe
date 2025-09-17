@@ -2,7 +2,7 @@ import { Card } from "@/components/ui/card";
 import NoDataFound from "@/components/workspace/no-data-found";
 import type { Project, User } from "@/types";
 import React from "react";
-import ProjectCard from "./ProjectCard";
+import ProjectCard from "./project-card";
 
 interface Props {
   workspaceId: string;

@@ -34,7 +34,12 @@ export const getData = async<T>(path: string): Promise<T> => {
     return res.data.data
 }
 
-export const updateDate = async<T>(path: string, data: unknown): Promise<T> => {
+export const updateData = async<T>(path: string, data: unknown): Promise<T> => {
+    const res = await api.put(path, data)
+    return res.data.data
+}
+
+export const putData = async<T>(path: string, data: unknown): Promise<T> => {
     const res = await api.put(path, data)
     return res.data.data
 }

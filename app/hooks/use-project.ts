@@ -1,8 +1,8 @@
 import type { CreateProjectFormData } from "@/components/workspace/create-project"
-import { postData } from "@/lib/fetch-util"
+import { getData, postData } from "@/lib/fetch-util"
 import { queryClient } from "@/provider/react-query-provider"
 import type { Project, Workspace } from "@/types"
-import { useMutation } from "@tanstack/react-query"
+import { useMutation, useQuery } from "@tanstack/react-query"
 
 export const useCreateProject = () => {
     return useMutation({
@@ -12,5 +12,12 @@ export const useCreateProject = () => {
                 queryKey: ["workspace", data.workspace._id]
             })
         }
+    })
+}
+
+export const useProjectDetails = (projectId: string) => {
+    return useQuery({
+        queryFn: () => getData(`/project/${projectId}/tasks`),
+        queryKey: ["project", projectId]
     })
 }
