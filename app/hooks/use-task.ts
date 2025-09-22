@@ -1,7 +1,7 @@
 import type { CreteTaskFormData } from "@/components/task/create-task"
-import { postData, putData } from "@/lib/fetch-util"
+import { getData, postData, putData } from "@/lib/fetch-util"
 import type { Project, TaskStatus } from "@/types"
-import { useMutation, useQueryClient } from "@tanstack/react-query"
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 
 export const useCreateTask = () => {
 
@@ -16,16 +16,10 @@ export const useCreateTask = () => {
     })
 }
 
-export const useUpdateTaskStatus = () => {
-    const queryClient = useQueryClient()
-
-    return useMutation({
-        mutationFn: async (data: { taskId: string, status: TaskStatus }) =>
-            putData(`/task/${data.taskId}/status`, { status: data.status }),
-        onSuccess: (data: any) => {
-            queryClient.invalidateQueries({
-                queryKey: ["project", data.project]
-            })
-        }
+export const useTaskByIdQuery = (taskId: string) => {
+    return useQuery({
+        queryKey: ["task", taskId],
+        queryFn: () => getData(`task/${taskId}`)
     })
 }
+

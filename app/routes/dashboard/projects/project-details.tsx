@@ -47,9 +47,7 @@ const ProjectDetails = () => {
   const projectProgress = getProjectProgress(tasks);
 
   const handleTaskClick = (taskId: string) => {
-    navigate(
-      `/workspaces/${workspaceId}/projects/${projectId}/tasks/${taskId}`
-    );
+    navigate(`/workspaces/${workspaceId}/projects/${projectId}/task/${taskId}`);
   };
 
   return (

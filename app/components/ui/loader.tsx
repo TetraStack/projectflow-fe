@@ -5,7 +5,7 @@ import React from "react";
 const Loader = () => {
   return (
     <div className="flex h-screen w-full bg-background items-center justify-center">
-      <LucidLoader className="size-5 text-primary animate-spin" />
+      <LucidLoader className="size-15 text-primary animate-spin" />
     </div>
   );
 };
