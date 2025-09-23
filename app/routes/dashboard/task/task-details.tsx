@@ -13,6 +13,9 @@ import {cn} from "lib/utils";
 import TaskTitle from "@/components/task/task-title";
 import {formatDistance, formatDistanceToNow} from "date-fns";
 import TaskStatusSelector from "@/components/task/task-status-selector";
+import TaskDescription from "@/components/task/task-description";
+import TaskAssigneesSelector from "@/components/task/task-assignees-selector";
+import TaskPrioritySelector from "@/components/task/task-priority-selector";
 
 interface Props {}
 
@@ -134,10 +137,28 @@ const TaskDetails: React.FC<Props> = () => {
                 </Button>
               </div>
             </div>
+
+            <div className="mb-6 flex gap-2">
+              <h3 className="text-sm font-medium text-muted-foreground mb-0">
+                Description:
+              </h3>
+
+              <TaskDescription
+                taskId={task._id}
+                description={task.description}
+              />
+            </div>
+
+            <TaskAssigneesSelector
+              task={task}
+              assignees={task.assignees}
+              projectMembers={project.members}
+            />
+
+            <TaskPrioritySelector priority={task.priority} taskId={task._id} />
           </div>
         </div>
       </div>
-      TaskDetails
     </div>
   );
 };

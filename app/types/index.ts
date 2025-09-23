@@ -43,7 +43,7 @@ export interface Project {
     tasks: Task[]
     members: {
         user: User
-        role: "admin" | "member" | "owner" | "viewer"
+        role: ProjectMemberRole
     }[]
     isArchived: boolean
     workspace: Workspace

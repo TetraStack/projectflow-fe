@@ -1,6 +1,6 @@
 import type { CreteTaskFormData } from "@/components/task/create-task"
 import { getData, postData, putData, updateData } from "@/lib/fetch-util"
-import type { Project, TaskStatus } from "@/types"
+import type { Project, TaskPriority, TaskStatus } from "@/types"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 
 export const useCreateTask = () => {
@@ -35,11 +35,49 @@ export const useTaskTitleMutation = () => {
     })
 }
 
+export const useTaskDescriptionMutation = () => {
+    const queryClient = useQueryClient()
+    return useMutation({
+        mutationFn: async (data: { description: string, taskId: string }) => updateData(`task/${data.taskId}/update-description`, { description: data.description }),
+        onSuccess: (data: any) => {
+            queryClient.invalidateQueries({
+                queryKey: ["task", data._id]
+            })
+        }
+    })
+}
+
 export const useTaskStatusMutation = () => {
     const queryClient = useQueryClient()
 
     return useMutation({
         mutationFn: async (data: { taskId: string, taskStatus: string }) => updateData(`task/${data.taskId}/update-status`, { status: data.taskStatus }),
+        onSuccess: (data: any) => {
+            queryClient.invalidateQueries({
+                queryKey: ["task", data._id]
+            })
+        }
+    })
+}
+
+export const useUpdateTaskAssigneesMutation = () => {
+    const queryClient = useQueryClient()
+
+    return useMutation({
+        mutationFn: async (data: { taskId: string, assignees: string[] }) => updateData(`task/${data.taskId}/update-assignees`, { assignees: data.assignees }),
+        onSuccess: (data: any) => {
+            queryClient.invalidateQueries({
+                queryKey: ["task", data._id]
+            })
+        }
+    })
+}
+
+export const useUpdateTaskPririty = () => {
+    const queryClient = useQueryClient()
+
+    return useMutation({
+        mutationFn: async (data: { taskId: string, priority: TaskPriority }) => updateData(`task/${data.taskId}/update-priority`, { priority: data.priority }),
         onSuccess: (data: any) => {
             queryClient.invalidateQueries({
                 queryKey: ["task", data._id]

@@ -30,7 +30,7 @@ const TaskStatusSelector: React.FC<Props> = ({status, taskId}) => {
 
   return (
     <Select value={status} onValueChange={handleStatusChange}>
-      <SelectTrigger className="w-[180px]">
+      <SelectTrigger className="w-[180px]" disabled={isPending}>
         <SelectValue placeholder="Status" />
       </SelectTrigger>
       <SelectContent>

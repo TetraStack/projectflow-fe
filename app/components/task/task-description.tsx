@@ -1,28 +1,28 @@
+import {useTaskDescriptionMutation} from "@/hooks/use-task";
 import React, {useState} from "react";
-import {Input} from "../ui/input";
+import {toast} from "sonner";
+import {Textarea} from "../ui/textarea";
 import {Button} from "../ui/button";
 import {Edit} from "lucide-react";
-import {useTaskTitleMutation} from "@/hooks/use-task";
-import {toast} from "sonner";
 
 interface Props {
-  title: string;
   taskId: string;
+  description?: string;
 }
 
-const TaskTitle: React.FC<Props> = ({title, taskId}) => {
+const TaskDescription: React.FC<Props> = ({taskId, description}) => {
   const [isEditing, setIsEditing] = useState(false);
-  const [newTitle, setNewTitle] = useState(title);
+  const [newDescription, setNewDescription] = useState(description);
+  const {mutate: updateDescription, isPending} = useTaskDescriptionMutation();
 
-  const {mutate: updateTitle, isPending} = useTaskTitleMutation();
-
-  const handleTitleChange = () => {
+  const handleDescriptionChange = () => {
+    if (!newDescription) return;
     setIsEditing(false);
-    updateTitle(
-      {title: newTitle, taskId},
+    updateDescription(
+      {description: newDescription, taskId},
       {
         onSuccess: () => {
-          toast.success("Title has been updated");
+          toast.success("Description has been updated");
         },
         onError: (error) => {
           toast.error(error + "");
@@ -33,26 +33,29 @@ const TaskTitle: React.FC<Props> = ({title, taskId}) => {
   return (
     <div className="flex items-center gap-2">
       {isEditing ? (
-        <Input
+        <Textarea
           disabled={isPending}
-          className="!text-xl font-semibold w-full min-w-3xl"
-          value={newTitle}
-          onChange={(e) => setNewTitle(e.target.value)}
+          className="!text-sm  w-full min-w-3xl"
+          value={newDescription}
+          onChange={(e) => setNewDescription(e.target.value)}
         />
       ) : (
-        <h2 className="text-xl flex-1 font-semibold">{title}</h2>
+        <h2 className="text-sm text-pretty flex-1 text-muted-foreground">
+          {description}
+        </h2>
       )}
 
       {isEditing ? (
         <>
           <Button
-            onClick={handleTitleChange}
+            onClick={handleDescriptionChange}
             className="py-0 "
             size={"sm"}
             disabled={isPending}
           >
             Save
           </Button>
+
           <Button
             onClick={() => setIsEditing(false)}
             className="py-0 "
@@ -71,4 +74,4 @@ const TaskTitle: React.FC<Props> = ({title, taskId}) => {
   );
 };
 
-export default TaskTitle;
+export default TaskDescription;

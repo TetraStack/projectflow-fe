@@ -1,9 +1,9 @@
-import { useCreateTask } from "@/hooks/use-task";
-import { createTaskSchema } from "@/lib/schema";
-import type { ProjectMemberRole, User } from "@/types";
-import { zodResolver } from "@hookform/resolvers/zod";
+import {useCreateTask} from "@/hooks/use-task";
+import {createTaskSchema} from "@/lib/schema";
+import type {ProjectMemberRole, User} from "@/types";
+import {zodResolver} from "@hookform/resolvers/zod";
 import React from "react";
-import { useForm } from "react-hook-form";
+import {useForm} from "react-hook-form";
 import type z from "zod";
 import {
   Dialog,
@@ -12,7 +12,7 @@ import {
   DialogTitle,
   DialogFooter,
 } from "../ui/dialog";
-import { toast } from "sonner";
+import {toast} from "sonner";
 import {
   Form,
   FormControl,
@@ -21,9 +21,9 @@ import {
   FormLabel,
   FormMessage,
 } from "../ui/form";
-import { Button } from "../ui/button";
-import { Input } from "../ui/input";
-import { Textarea } from "../ui/textarea";
+import {Button} from "../ui/button";
+import {Input} from "../ui/input";
+import {Textarea} from "../ui/textarea";
 import {
   Select,
   SelectContent,
@@ -31,12 +31,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
-import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
-import { cn } from "@/lib/utils";
-import { Calendar1Icon } from "lucide-react";
-import { format } from "date-fns";
-import { Calendar } from "../ui/calendar";
-import { Checkbox } from "../ui/checkbox";
+import {Popover, PopoverContent, PopoverTrigger} from "../ui/popover";
+import {cn} from "@/lib/utils";
+import {Calendar1Icon} from "lucide-react";
+import {format} from "date-fns";
+import {Calendar} from "../ui/calendar";
+import {Checkbox} from "../ui/checkbox";
 
 interface Props {
   open: boolean;
@@ -56,8 +56,6 @@ const CreateTaskDialog: React.FC<Props> = ({
   projectId,
   projectMembers,
 }) => {
-  console.log(projectMembers);
-
   const form = useForm({
     resolver: zodResolver(createTaskSchema),
     defaultValues: {
@@ -70,7 +68,7 @@ const CreateTaskDialog: React.FC<Props> = ({
     },
   });
 
-  const { mutate: createtask, isPending } = useCreateTask();
+  const {mutate: createtask, isPending} = useCreateTask();
 
   const onSubmit = (data: CreteTaskFormData) => {
     createtask(
@@ -104,7 +102,7 @@ const CreateTaskDialog: React.FC<Props> = ({
                 <FormField
                   control={form.control}
                   name="title"
-                  render={({ field }) => {
+                  render={({field}) => {
                     return (
                       <FormItem>
                         <FormLabel>Title</FormLabel>
@@ -120,7 +118,7 @@ const CreateTaskDialog: React.FC<Props> = ({
                 <FormField
                   control={form.control}
                   name="description"
-                  render={({ field }) => {
+                  render={({field}) => {
                     return (
                       <FormItem>
                         <FormLabel>Description</FormLabel>
@@ -141,7 +139,7 @@ const CreateTaskDialog: React.FC<Props> = ({
                   <FormField
                     control={form.control}
                     name="status"
-                    render={({ field }) => {
+                    render={({field}) => {
                       return (
                         <FormItem>
                           <FormLabel>Status</FormLabel>
@@ -175,7 +173,7 @@ const CreateTaskDialog: React.FC<Props> = ({
                   <FormField
                     control={form.control}
                     name="priority"
-                    render={({ field }) => {
+                    render={({field}) => {
                       return (
                         <FormItem>
                           <FormLabel>Priority</FormLabel>
@@ -209,7 +207,7 @@ const CreateTaskDialog: React.FC<Props> = ({
                 <FormField
                   name="dueDate"
                   control={form.control}
-                  render={({ field }) => (
+                  render={({field}) => (
                     <FormItem>
                       <FormLabel>Due Date</FormLabel>
                       <FormControl>
@@ -253,7 +251,7 @@ const CreateTaskDialog: React.FC<Props> = ({
                 <FormField
                   control={form.control}
                   name="assignees"
-                  render={({ field }) => {
+                  render={({field}) => {
                     const selectedMembers = field.value || [];
                     return (
                       <FormItem>
