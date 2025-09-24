@@ -1,7 +1,11 @@
 import BackButton from "@/components/ui/back-button";
 import {Badge} from "@/components/ui/badge";
 import Loader from "@/components/ui/loader";
-import {useTaskByIdQuery} from "@/hooks/use-task";
+import {
+  useArchivedTaskMutation,
+  useTaskByIdQuery,
+  useWatchTaskMutation,
+} from "@/hooks/use-task";
 import {useAuth} from "@/provider/auth-context";
 import type {Project, Task} from "@/types";
 import React from "react";
@@ -20,6 +24,7 @@ import SubTasksDetails from "@/components/task/subtasks-details";
 import Watchers from "@/components/task/watchers";
 import TaskActivity from "@/components/task/task-activity";
 import CommentSection from "@/components/task/comment-section";
+import {toast} from "sonner";
 
 interface Props {}
 
@@ -31,6 +36,11 @@ const TaskDetails: React.FC<Props> = () => {
     data: {task: Task; project: Project};
     isLoading: boolean;
   };
+
+  const {mutate: updateWatch, isPending: isupdatingwatch} =
+    useWatchTaskMutation();
+  const {mutate: updateArchive, isPending: isArchiving} =
+    useArchivedTaskMutation();
 
   if (isLoading) {
     return (
@@ -54,6 +64,34 @@ const TaskDetails: React.FC<Props> = () => {
   );
 
   const members = task.assignees || [];
+
+  const handleWatchClick = () => {
+    updateWatch(
+      {taskId: taskId!},
+      {
+        onSuccess: () =>
+          toast.success(
+            isUserWatching ? "Stopped Watching" : "Started Watching"
+          ),
+
+        onError: (error) => toast.error(error + ""),
+      }
+    );
+  };
+
+  const handleArchiveClick = () => {
+    updateArchive(
+      {taskId: taskId!},
+      {
+        onSuccess: () =>
+          toast.success(
+            task.isArchived  ? "Task is UnArchived" : "Task isArchived"
+          ),
+
+        onError: (error) => toast.error(error + ""),
+      }
+    );
+  };
 
   return (
     <div className="container mx-auto p-0 py-4 md:px-4">
@@ -80,7 +118,8 @@ const TaskDetails: React.FC<Props> = () => {
             variant={"outline"}
             size={"sm"}
             className="mx-4 w-fit"
-            onClick={() => {}}
+            disabled={isupdatingwatch}
+            onClick={handleWatchClick}
           >
             {isUserWatching ? (
               <>
@@ -96,6 +135,8 @@ const TaskDetails: React.FC<Props> = () => {
           <Button
             className="text-primary hover:text-primary/80"
             variant={"outline"}
+            onClick={handleArchiveClick}
+            disabled={isArchiving}
           >
             {task.isArchived ? "Unarchive" : "Archive"}
           </Button>

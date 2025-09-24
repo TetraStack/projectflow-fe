@@ -26,9 +26,6 @@ const CommentSection: React.FC<Props> = ({taskId, members}) => {
     data: Comment[];
   };
 
-  console.log("Comment Data=>", allComments);
-  console.log("Comment Data=>", allComments);
-
   const handleAddComment = () => {
     addComment(
       {taskId, comment: newComment},

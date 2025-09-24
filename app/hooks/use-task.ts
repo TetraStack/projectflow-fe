@@ -163,3 +163,34 @@ export const useGetAllComments = (taskId: string) => {
     })
 }
 
+export const useArchivedTaskMutation = () => {
+    const queryClient = useQueryClient()
+    return useMutation({
+        mutationFn: (data: { taskId: string }) => postData(`/task/${data.taskId}/archive`),
+        onSuccess: (data: any) => {
+
+            queryClient.invalidateQueries({
+                queryKey: ["task", data._id]
+            })
+            queryClient.invalidateQueries({
+                queryKey: ["task-activity", data._id]
+            })
+        }
+    })
+}
+export const useWatchTaskMutation = () => {
+    const queryClient = useQueryClient()
+    return useMutation({
+        mutationFn: (data: { taskId: string }) => postData(`/task/${data.taskId}/watch`),
+        onSuccess: (data: any) => {
+
+            queryClient.invalidateQueries({
+                queryKey: ["task", data._id]
+            })
+            queryClient.invalidateQueries({
+                queryKey: ["task-activity", data._id]
+            })
+        }
+    })
+}
+
