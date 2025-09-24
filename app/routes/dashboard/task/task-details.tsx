@@ -19,6 +19,7 @@ import TaskPrioritySelector from "@/components/task/task-priority-selector";
 import SubTasksDetails from "@/components/task/subtasks-details";
 import Watchers from "@/components/task/watchers";
 import TaskActivity from "@/components/task/task-activity";
+import CommentSection from "@/components/task/comment-section";
 
 interface Props {}
 
@@ -162,6 +163,8 @@ const TaskDetails: React.FC<Props> = () => {
 
             <SubTasksDetails subTasks={task.subTasks} taskId={task._id} />
           </div>
+
+          <CommentSection taskId={task._id} members={project.members} />
         </div>
 
         <div className="bg-card rounded-lg p-6 shadow-sm mb-6">

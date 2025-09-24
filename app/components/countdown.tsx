@@ -49,13 +49,13 @@ const Countdown = () => {
 
   console.log(timeUnits);
   return (
-    <div className="flex gap-4 md:gap-8 flex-col text-center">
-      <span className="border w-fit mx-auto rounded-xl p-2 text-primary border-secondary">
+    <div className="flex gap-4 md:gap-8 flex-col text-center ">
+      <span className="border w-fit sm:mx-auto rounded-xl p-2 text-primary border-secondary font-wrap mx-2">
         We’re building Projectflow because work tools shouldn’t get in the way
         of work.
       </span>
 
-      <div className="flex gap-4 md:gap-8">
+      <div className="flex gap-4 md:gap-8 ">
         {timeUnits.map((units, index) => (
           <motion.div
             key={index}

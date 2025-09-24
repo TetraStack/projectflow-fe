@@ -151,3 +151,22 @@ export interface Activity {
     details: { descriptiom: string }
     createdAt: Date
 }
+
+export interface CommentReaction {
+    emoji: string
+    user: User
+}
+
+export interface Comment {
+    _id: string
+    author: User
+    text: string
+    createdAt: Date
+    reactions?: CommentReaction[]
+    attchments?: {
+        fileName: string
+        fileUrl: string
+        fileType?: string
+        fileSize?: number
+    }
+}

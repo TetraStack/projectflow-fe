@@ -24,7 +24,7 @@ const TaskActivity: React.FC<Props> = ({resourceId}) => {
             const Icon = getActionIcon(activity.action);
             return (
               <div key={activity._id} className="flex gap-2">
-                <div className="size-8  flex items-center justify-center text-primary">
+                <div className="size-8  flex items-center justify-center ">
                   <Icon className="size-5 rounded-full" />
                 </div>
 

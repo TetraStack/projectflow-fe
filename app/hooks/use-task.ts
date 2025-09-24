@@ -141,3 +141,25 @@ export const useGetTaskActivity = (taskId: string) => {
     })
 }
 
+export const useAddComment = () => {
+    const queryClient = useQueryClient()
+    return useMutation({
+        mutationFn: (data: { taskId: string, comment: string }) => postData(`/task/${data.taskId}/add-comment`, { comment: data.comment }),
+        onSuccess: (data: any) => {
+            queryClient.invalidateQueries({
+                queryKey: ["task-comments", data.task]
+            })
+            queryClient.invalidateQueries({
+                queryKey: ["task-activity", data.task]
+            })
+        }
+    })
+}
+
+export const useGetAllComments = (taskId: string) => {
+    return useQuery({
+        queryKey: ["task-comments", taskId],
+        queryFn: () => getData(`/task/${taskId}/get-comments`)
+    })
+}
+
