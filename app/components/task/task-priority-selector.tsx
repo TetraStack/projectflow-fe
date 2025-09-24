@@ -33,16 +33,18 @@ const TaskPrioritySelector: React.FC<Props> = ({taskId, priority}) => {
   };
 
   return (
-    <Select value={priority} onValueChange={handlePriorityChange}>
-      <SelectTrigger className="w-[180px] " disabled={isPending}>
-        <SelectValue placeholder="Priority" />
-        <SelectContent>
-          <SelectItem value="Low">Low</SelectItem>
-          <SelectItem value="Medium">Medium</SelectItem>
-          <SelectItem value="High">High</SelectItem>
-        </SelectContent>
-      </SelectTrigger>
-    </Select>
+    <div className="mb-6">
+      <Select value={priority} onValueChange={handlePriorityChange}>
+        <SelectTrigger className="w-[180px] " disabled={isPending}>
+          <SelectValue placeholder="Priority" />
+          <SelectContent>
+            <SelectItem value="Low">Low</SelectItem>
+            <SelectItem value="Medium">Medium</SelectItem>
+            <SelectItem value="High">High</SelectItem>
+          </SelectContent>
+        </SelectTrigger>
+      </Select>
+    </div>
   );
 };
 

@@ -92,3 +92,62 @@ export type Attachment = {
     uploadedAt: Date
     _id: string
 }
+
+export type Action =
+
+    | "created_task"
+    | "updated_task"
+    | "deleted_task"
+    | "completed_task"
+    | "assigned_task"
+    | "unassigned_task"
+
+    | "created_subtask"
+    | "updated_subtask"
+    | "deleted_subtask"
+    | "completed_subtask"
+    | "assigned_subtask"
+    | "unassigned_subtask"
+
+    | "created_project"
+    | "updated_project"
+    | "deleted_project"
+    | "archived_project"
+    | "restored_project"
+    | "added_project_member"
+    | "removed_project_member"
+
+    | "created_workspace"
+    | "updated_workspace"
+    | "deleted_workspace"
+    | "joined_workspace"
+    | "left_workspace"
+    | "transferred_workspace_ownership"
+    | "invited_workspace_member"
+    | "removed_workspace_member"
+
+    | "added_comment"
+    | "updated_comment"
+    | "deleted_comment"
+
+    | "added_attachment"
+    | "removed_attachment"
+
+    | "added_label"
+    | "removed_label"
+
+    | "added_member"
+    | "removed_member"
+    | "mentioned_user";
+
+export type Resource = "Task" | "Project" | "Workspace" | "Comment" | "User"
+
+export interface Activity {
+    _id: string
+    user: User
+    action: Action,
+    resourceType: Resource,
+    resourceId: string
+    details: { descriptiom: string }
+    createdAt: Date
+}

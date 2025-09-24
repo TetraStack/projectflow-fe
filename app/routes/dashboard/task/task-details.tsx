@@ -16,6 +16,9 @@ import TaskStatusSelector from "@/components/task/task-status-selector";
 import TaskDescription from "@/components/task/task-description";
 import TaskAssigneesSelector from "@/components/task/task-assignees-selector";
 import TaskPrioritySelector from "@/components/task/task-priority-selector";
+import SubTasksDetails from "@/components/task/subtasks-details";
+import Watchers from "@/components/task/watchers";
+import TaskActivity from "@/components/task/task-activity";
 
 interface Props {}
 
@@ -97,7 +100,7 @@ const TaskDetails: React.FC<Props> = () => {
           </Button>
         </div>
       </motion.div>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <div className="lg:col-span-2">
           <div className="bg-card rounded-lg p-6 shadow-sm mb-6">
             <div className="flex flex-col md:flex-row justify-between items-center mb-4">
@@ -156,7 +159,15 @@ const TaskDetails: React.FC<Props> = () => {
             />
 
             <TaskPrioritySelector priority={task.priority} taskId={task._id} />
+
+            <SubTasksDetails subTasks={task.subTasks} taskId={task._id} />
           </div>
+        </div>
+
+        <div className="bg-card rounded-lg p-6 shadow-sm mb-6">
+          <Watchers watchers={task.watchers} />
+
+          <TaskActivity resourceId={task._id} />
         </div>
       </div>
     </div>
