@@ -1,14 +1,14 @@
 import Header from "@/components/layout/header";
 import SidebarComponent from "@/components/layout/sidebarComponent";
-import { Button } from "@/components/ui/button";
+import {Button} from "@/components/ui/button";
 import CreateWorkspace from "@/components/workspace/create-workspace";
-import { useLogoutMutation } from "@/hooks/use-auth";
-import { getData } from "@/lib/fetch-util";
-import { useAuth } from "@/provider/auth-context";
-import type { Workspace } from "@/types";
-import { LogOut } from "lucide-react";
-import React, { use, useEffect, useState } from "react";
-import { Navigate, Outlet, useNavigate } from "react-router";
+import {useLogoutMutation} from "@/hooks/use-auth";
+import {getData} from "@/lib/fetch-util";
+import {useAuth} from "@/provider/auth-context";
+import type {Workspace} from "@/types";
+import {LogOut} from "lucide-react";
+import React, {use, useEffect, useState} from "react";
+import {Navigate, Outlet, useLocation, useNavigate} from "react-router";
 
 interface DashBoardLayoutProps {
   children: React.ReactNode;
@@ -18,14 +18,14 @@ export const clientLoader = async () => {
   try {
     const [workspaces] = await Promise.all([getData("/workspace")]);
 
-    return { workspaces };
+    return {workspaces};
   } catch (error) {
     console.log(error);
   }
 };
 
-const DashBoardLayout = ({ children }: DashBoardLayoutProps) => {
-  const { user, logout, isLoading, isAuthenticated } = useAuth();
+const DashBoardLayout = ({children}: DashBoardLayoutProps) => {
+  const {user, logout, isLoading, isAuthenticated} = useAuth();
   const [isCreatingWorkspace, setIsCreatingWorkspace] = useState(false);
   const [currentWorkspace, setCurrentWorkspace] = useState<Workspace | null>(
     null
@@ -43,8 +43,19 @@ const DashBoardLayout = ({ children }: DashBoardLayoutProps) => {
     return <Navigate to="/sign-in" />;
   }
 
+  const isOnWorkspacePage = useLocation().pathname.includes("/workspaces");
+
   const handleWorkspaceSelected = (workspace: Workspace) => {
     setCurrentWorkspace(workspace);
+    const location = window.location;
+    console.log("isOnWorkspacePage =>", isOnWorkspacePage);
+
+    if (isOnWorkspacePage) {
+      navigate(`/workspaces/${workspace._id}`);
+    } else {
+      const basePath = location.pathname;
+      navigate(`${basePath}?workspaceId=${workspace._id}`);
+    }
   };
 
   return (

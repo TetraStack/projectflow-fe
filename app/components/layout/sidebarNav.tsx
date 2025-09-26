@@ -1,11 +1,11 @@
-import type { navItems } from "@/constants";
-import { cn } from "@/lib/utils";
-import type { Workspace } from "@/types";
-import type { LucideIcon } from "lucide-react";
+import type {navItems} from "@/constants";
+import {cn} from "@/lib/utils";
+import type {Workspace} from "@/types";
+import type {LucideIcon} from "lucide-react";
 import React from "react";
 import z from "zod";
-import { Button } from "../ui/button";
-import { useLocation, useNavigate } from "react-router";
+import {Button} from "../ui/button";
+import {useLocation, useNavigate} from "react-router";
 
 interface Props extends React.HtmlHTMLAttributes<HTMLElement> {
   items: {
@@ -29,14 +29,14 @@ const SidebarNav: React.FC<Props> = ({
   const navigate = useNavigate();
   return (
     <nav className={cn("flex flex-col gap-y-2", className)} {...props}>
-      {items.map(({ title, href, icon }) => {
+      {items.map(({title, href, icon}) => {
         const Icon = icon;
         const isActive = location.pathname === href;
         const handleOnclick = () => {
           if (href === "/workspaces") {
             navigate(href);
           } else if (currentWorkspace && currentWorkspace._id) {
-            navigate(`${href}/${currentWorkspace._id}`);
+            navigate(`${href}/?workspaceId=${currentWorkspace._id}`);
           } else {
             navigate(href);
           }

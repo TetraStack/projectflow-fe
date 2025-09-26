@@ -170,3 +170,39 @@ export interface Comment {
         fileSize?: number
     }
 }
+
+export interface StateCardProps {
+    totalProjects: number
+    totalTasks: number
+    totalProjectsInProgress: number
+    totalTaskCompleted: number
+    totalTaskToDo: number
+    totalTaskInProgress: number
+}
+
+export type DashboardData = {
+    stats: StateCardProps;
+    taskTrendsData: {
+        name: string;
+        Done: number;
+        In_Progress: number;
+        To_Do: number;
+    }[];
+    projectStatusData: {
+        name: string;
+        value: number;
+        color: string;
+    }[];
+    taskPriorityData: {
+        name: string;
+        value: number;
+        color: string;
+    }[];
+    workspaceProductivityData: {
+        name: string;
+        completed: number;
+        total: number;
+    }[];
+    upcomingTasks: Task[];
+    recentProjects: Project[];
+}
