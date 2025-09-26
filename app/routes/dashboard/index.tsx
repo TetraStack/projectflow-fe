@@ -25,17 +25,22 @@ const Dashboard = () => {
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-bold">Dashboard</h1>
       </div>
-      <StateCard data={data?.stats} />
 
-      <StatisticsCharts
-        stats={data.stats}
-        taskTrendsData={data.taskTrendsData}
-        projectStatusData={data.projectStatusData}
-        taskPriorityData={data.taskPriorityData}
-        workspaceProductivityData={data.workspaceProductivityData}
-        upcomingTasks={data.upcomingTasks}
-        recentProjects={data.recentProjects}
-      />
+      {data && (
+        <>
+          <StateCard data={data?.stats} />
+
+          <StatisticsCharts
+            stats={data?.stats}
+            taskTrendsData={data?.taskTrendsData}
+            projectStatusData={data?.projectStatusData}
+            taskPriorityData={data?.taskPriorityData}
+            workspaceProductivityData={data?.workspaceProductivityData}
+            upcomingTasks={data?.upcomingTasks}
+            recentProjects={data?.recentProjects}
+          />
+        </>
+      )}
     </div>
   );
 };

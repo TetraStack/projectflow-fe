@@ -7,7 +7,7 @@ import {
   CardHeader,
   CardTitle,
 } from "../ui/card";
-import {ChartLine, ChartPie} from "lucide-react";
+import {ChartBarBig, ChartLine, ChartPie} from "lucide-react";
 import {
   ChartContainer,
   ChartLegend,
@@ -16,6 +16,8 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart";
 import {
+  Bar,
+  BarChart,
   CartesianGrid,
   Cell,
   Legend,
@@ -97,7 +99,7 @@ const StatisticsCharts: React.FC<DashboardData> = ({
                   dot={{r: 4}}
                 />
 
-                <ChartLegend content={<ChartLegendContent />} />
+                <Legend />
               </LineChart>
             </ChartContainer>
           </div>
@@ -195,6 +197,71 @@ const StatisticsCharts: React.FC<DashboardData> = ({
                 />
                 <Legend />
               </PieChart>
+            </ChartContainer>
+          </div>
+        </CardContent>
+      </Card>
+
+      <Card className="lg:col-span-2">
+        <CardHeader className="flex flex-row items-center justify-between pb-2">
+          <div className="space-y-0.5">
+            <CardTitle className="text-base font-medium">
+              Workspace Productivity
+            </CardTitle>
+            <CardDescription>Task completion by project</CardDescription>
+          </div>
+
+          <ChartBarBig className="size-5  text-primary" />
+        </CardHeader>
+
+        <CardContent className="w-full overflow-x-auto md:overflow-x-hidden ">
+          <div className="min-w-[350px]  ">
+            <ChartContainer
+              config={{
+                completed: {color: "#3b82f6"},
+                total: {color: "primary"},
+              }}
+              className="h-[300px]"
+            >
+              <BarChart
+                data={workspaceProductivityData}
+                barGap={0}
+                barSize={20}
+              >
+                <XAxis
+                  dataKey="name"
+                  stroke="#888888"
+                  tickLine={false}
+                  axisLine={false}
+                  fontSize={12}
+                />
+
+                <YAxis
+                  stroke="#888888"
+                  tickLine={false}
+                  axisLine={false}
+                  fontSize={12}
+                />
+
+                <CartesianGrid strokeDasharray={"3 3"} vertical={false} />
+                <ChartTooltip
+                  content={<ChartTooltipContent nameKey="name" />}
+                />
+
+                <Bar
+                  dataKey={"total"}
+                  fill="#000"
+                  radius={[4, 4, 0, 0]}
+                  name={"Total Tasks"}
+                />
+                <Bar
+                  dataKey={"completed"}
+                  fill="#3b82f6"
+                  radius={[4, 4, 0, 0]}
+                  name={"Completed Tasks"}
+                />
+                <Legend />
+              </BarChart>
             </ChartContainer>
           </div>
         </CardContent>
