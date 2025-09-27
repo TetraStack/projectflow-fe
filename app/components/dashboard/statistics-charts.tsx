@@ -86,14 +86,14 @@ const StatisticsCharts: React.FC<DashboardData> = ({
                 />
                 <Line
                   type={"monotone"}
-                  dataKey={"In_Progress"}
+                  dataKey={"In Progress"}
                   stroke="#3b82f6"
                   strokeWidth={2}
                   dot={{r: 4}}
                 />
                 <Line
                   type={"monotone"}
-                  dataKey={"To_Do"}
+                  dataKey={"To Do"}
                   stroke="#6b7280"
                   strokeWidth={2}
                   dot={{r: 4}}

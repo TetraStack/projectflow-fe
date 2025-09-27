@@ -1,5 +1,7 @@
+import RecentProjects from "@/components/dashboard/recent-projects";
 import StateCard from "@/components/dashboard/state-card";
 import StatisticsCharts from "@/components/dashboard/statistics-charts";
+import UpcomingTasks from "@/components/dashboard/upcoming-tasks";
 import Loader from "@/components/ui/loader";
 import {useDashBoardData} from "@/hooks/use-workspace";
 import type {DashboardData, Project, StateCardProps, Task} from "@/types";
@@ -39,6 +41,17 @@ const Dashboard = () => {
             upcomingTasks={data?.upcomingTasks}
             recentProjects={data?.recentProjects}
           />
+
+          <div className="grid gap-6 lg:grid-cols-2 ">
+            <RecentProjects
+              data={data.recentProjects}
+              workspaceId={workspaceId!}
+            />
+            <UpcomingTasks
+              data={data.upcomingTasks}
+              workspaceId={workspaceId!}
+            />
+          </div>
         </>
       )}
     </div>
