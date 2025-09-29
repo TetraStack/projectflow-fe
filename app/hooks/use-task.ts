@@ -194,3 +194,10 @@ export const useWatchTaskMutation = () => {
     })
 }
 
+export const useGetAllMyTasks = () => {
+    return useQuery({
+        queryKey: ["my-tasks"],
+        queryFn: () => getData('/task/my-tasks')
+    })
+}
+

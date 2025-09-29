@@ -18,7 +18,6 @@ interface Props {
 }
 
 const UpcomingTasks: React.FC<Props> = ({data, workspaceId}) => {
-  console.log("data =====>", data);
   return (
     <Card>
       <CardHeader>

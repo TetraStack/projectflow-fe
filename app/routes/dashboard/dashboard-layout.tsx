@@ -8,7 +8,13 @@ import {useAuth} from "@/provider/auth-context";
 import type {Workspace} from "@/types";
 import {LogOut} from "lucide-react";
 import React, {use, useEffect, useState} from "react";
-import {Navigate, Outlet, useLocation, useNavigate} from "react-router";
+import {
+  Navigate,
+  Outlet,
+  useLocation,
+  useNavigate,
+  useSearchParams,
+} from "react-router";
 
 interface DashBoardLayoutProps {
   children: React.ReactNode;
@@ -48,7 +54,6 @@ const DashBoardLayout = ({children}: DashBoardLayoutProps) => {
   const handleWorkspaceSelected = (workspace: Workspace) => {
     setCurrentWorkspace(workspace);
     const location = window.location;
-    console.log("isOnWorkspacePage =>", isOnWorkspacePage);
 
     if (isOnWorkspacePage) {
       navigate(`/workspaces/${workspace._id}`);

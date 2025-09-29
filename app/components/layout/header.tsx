@@ -1,7 +1,7 @@
-import { useAuth } from "@/provider/auth-context";
-import type { Workspace } from "@/types";
-import React from "react";
-import { Button } from "../ui/button";
+import {useAuth} from "@/provider/auth-context";
+import type {Workspace} from "@/types";
+import React, {useEffect} from "react";
+import {Button} from "../ui/button";
 
 import {
   ArrowDown,
@@ -19,11 +19,11 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
-import { Avatar, AvatarImage } from "../ui/avatar";
-import { ModeToggle } from "../mode-toggle";
-import { Link, useLoaderData } from "react-router";
+import {Avatar, AvatarImage} from "../ui/avatar";
+import {ModeToggle} from "../mode-toggle";
+import {Link, useLoaderData, useSearchParams} from "react-router";
 import WorkspaceAvatar from "../workspace/workspace-avatar";
-import { withOpacity } from "../workspace/workspace-card";
+import {withOpacity} from "../workspace/workspace-card";
 
 interface Props {
   onWorkspaceSelected: (workspace: Workspace) => void;
@@ -36,9 +36,19 @@ const Header: React.FC<Props> = ({
   selectedWorkspace,
   onCreateWorkspace,
 }) => {
-  const { user, logout } = useAuth();
-  const data = useLoaderData() as { workspaces: Workspace[] };
+  const {user, logout} = useAuth();
+  const data = useLoaderData() as {workspaces: Workspace[]};
   const workspaces = data?.workspaces ?? [];
+
+  const [searchParams] = useSearchParams();
+  const workspaceId = searchParams.get("workspaceId");
+
+  useEffect(() => {
+    if (workspaceId && workspaces.length > 0) {
+      const found = workspaces.find((w) => w._id === workspaceId);
+      if (found) onWorkspaceSelected(found);
+    }
+  }, [workspaceId]);
 
   return (
     <div className="bg-background sticky  top-0 z-40 border-b-3 border-dashed border-primary/20">

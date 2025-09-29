@@ -1,26 +1,32 @@
-import { navItems } from "@/constants";
-import { cn } from "@/lib/utils";
-import { useAuth } from "@/provider/auth-context";
-import type { Workspace } from "@/types";
+import {navItems} from "@/constants";
+import {cn} from "@/lib/utils";
+import {useAuth} from "@/provider/auth-context";
+import type {Workspace} from "@/types";
 import {
   ChevronLeftCircle,
   ChevronRightCircle,
   LogOut,
   SquareKanban,
 } from "lucide-react";
-import React, { useState } from "react";
-import { Link } from "react-router";
-import { Button } from "../ui/button";
-import { ScrollArea } from "../ui/scroll-area";
+import React, {useState} from "react";
+import {Link, useLocation} from "react-router";
+import {Button} from "../ui/button";
+import {ScrollArea} from "../ui/scroll-area";
 import SidebarNav from "./sidebarNav";
 
 interface Props {
   currentWorkspace: Workspace | null;
 }
 
-const SidebarComponent: React.FC<Props> = ({ currentWorkspace }) => {
-  const { user, logout } = useAuth();
+const SidebarComponent: React.FC<Props> = ({currentWorkspace}) => {
+  const {user, logout} = useAuth();
   const [isCollapsed, setIsCollapsed] = useState(false);
+
+  const location = useLocation();
+
+  const pathForHome = "/dashboard" + location.search;
+
+  // console.log("location====>", location.pathname + location.search);
   return (
     <div
       className={cn(
@@ -43,7 +49,7 @@ const SidebarComponent: React.FC<Props> = ({ currentWorkspace }) => {
 
       {/* projectflow logo */}
       <div className="h-14 border-b-3 border-dashed border-primary/20 flex items-center px-4 mt-0.5 mb-4">
-        <Link to="/dashboard" className="flex items-center">
+        <Link to={pathForHome} className="flex items-center">
           {!isCollapsed && (
             <div className="flex items-center gap-2 text-primary">
               <SquareKanban className="size-6 " />
