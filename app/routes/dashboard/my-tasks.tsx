@@ -12,12 +12,37 @@ import {useGetAllMyTasks} from "@/hooks/use-task";
 import type {Task} from "@/types";
 import {} from "@radix-ui/react-dropdown-menu";
 import React, {useEffect, useState} from "react";
-import {useSearchParams} from "react-router";
+import {Link, useSearchParams} from "react-router";
 
 import {HugeiconsIcon} from "@hugeicons/react";
-import {FilterEditIcon} from "@hugeicons/core-free-icons";
-import {Filter} from "lucide-react";
+import {
+  FilterEditIcon,
+  TickDouble03Icon,
+  Clock01FreeIcons,
+  SquareArrowUpRightIcon,
+} from "@hugeicons/core-free-icons";
+import {
+  ArrowUpRight,
+  CalendarDays,
+  CheckCircle,
+  Clock,
+  Filter,
+  FolderKanban,
+  ProjectorIcon,
+  RefreshCw,
+} from "lucide-react";
 import {Checkbox} from "@/components/ui/checkbox";
+import {Input} from "@/components/ui/input";
+import {Tabs, TabsContent, TabsList, TabsTrigger} from "@/components/ui/tabs";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import {Badge} from "@/components/ui/badge";
+import {format} from "date-fns";
 
 interface Props {}
 
@@ -102,6 +127,12 @@ const MyTasks: React.FC<Props> = () => {
     if (urlSearch !== search) setSearch(urlSearch);
   }, [searchParams]);
 
+  const todoTasks = sortedTasks.filter((task) => task.status === "To Do");
+  const inProgressTasks = sortedTasks.filter(
+    (task) => task.status === "In Progress"
+  );
+  const doneTasks = sortedTasks.filter((task) => task.status === "Done");
+
   if (isLoading) {
     return (
       <div>
@@ -183,7 +214,278 @@ const MyTasks: React.FC<Props> = () => {
         </div>
       </div>
 
-      
+      <Input
+        placeholder="Search tasks..."
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+        className="max-w-md"
+      />
+
+      <Tabs defaultValue="list">
+        <TabsList>
+          <TabsTrigger value="list">List</TabsTrigger>
+          <TabsTrigger value="board">Board</TabsTrigger>
+        </TabsList>
+
+        <TabsContent value="list">
+          <Card>
+            <CardHeader>
+              <CardTitle>My Tasks</CardTitle>
+              <CardDescription>
+                {sortedTasks.length} tasks found
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="divider-y">
+                {sortedTasks.map((task) => (
+                  <div key={task._id} className="p-4 hover:bg-muted/50">
+                    <div className="flex flex-col md:flex-row md:items-center justify-between mb-2 gap-3">
+                      <div className="flex gap-2 ">
+                        <div className="py-1">
+                          {task.status === "Done" ? (
+                            <HugeiconsIcon
+                              icon={TickDouble03Icon}
+                              className="text-green-500 size-4"
+                            />
+                          ) : (
+                            <HugeiconsIcon
+                              icon={Clock01FreeIcons}
+                              className="text-primary size-4"
+                            />
+                          )}
+                        </div>
+
+                        <div>
+                          <Link
+                            to={`/workspaces/${task.project.workspace}/projects/${task.project._id}/task/${task._id}`}
+                            className="font-medium hover:text-primary hover:underline transition-colors flex items-center"
+                          >
+                            {task.title}
+                            <ArrowUpRight className="size-4 ml-1" />
+                          </Link>
+
+                          <div className="flex items-center space-x-2 mt-1">
+                            <Badge
+                              className=""
+                              variant={
+                                task.status === "Done" ? "default" : "outline"
+                              }
+                            >
+                              {task.status}
+                            </Badge>
+
+                            {task.priority && (
+                              <Badge
+                                variant={
+                                  task.priority === "High"
+                                    ? "destructive"
+                                    : "secondary"
+                                }
+                              >
+                                {task.priority}
+                              </Badge>
+                            )}
+
+                            {true && (
+                              <Badge variant={"outline"}>{"Archived"}</Badge>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="text-sm text-muted-foreground space-y-1 text-right">
+                        {task.dueDate && (
+                          <div>
+                            <CalendarDays className="size-4 inline-flex mr-2" />{" "}
+                            {format(task.dueDate, "PPPP")}
+                          </div>
+                        )}
+
+                        <div>
+                          <FolderKanban className="size-4 inline-flex mr-2" />
+                          <span className="font-medium">
+                            {task.project.title}
+                          </span>
+                        </div>
+
+                        <div>
+                          <RefreshCw className="size-4 inline-flex mr-2" />{" "}
+                          {format(task.updatedAt, "PPPP")}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+
+                {sortedTasks?.length === 0 && (
+                  <div className="p-4 text-center text-sm text-muted-foreground">
+                    No tasks found
+                  </div>
+                )}
+              </div>
+            </CardContent>
+          </Card>
+        </TabsContent>
+        <TabsContent value="board">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 select-none">
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center justify-between">
+                  To Do
+                  <Badge variant={"outline"}>{todoTasks?.length}</Badge>
+                </CardTitle>
+              </CardHeader>
+
+              <CardContent className="p-3 space-y-3 max-h-[600px] overflow-y-auto">
+                {todoTasks.map((task) => (
+                  <Card
+                    key={task._id}
+                    className="hover:shadow-md transition-shadow px-2 "
+                  >
+                    <Link
+                      to={`/workspaces/${task.project.workspace}/projects/${task.project._id}/task/${task._id}`}
+                      className="block"
+                    >
+                      <h3 className="font-medium"> {task.title}</h3>
+                      <p className="text-sm text-muted-foreground line-clamp-3">
+                        {task.description || "No description "}
+                      </p>
+
+                      <div className="flex items-center mt-2 gap-2">
+                        <Badge
+                          variant={
+                            task.priority === "High"
+                              ? "destructive"
+                              : "secondary"
+                          }
+                        >
+                          {task.priority}
+                        </Badge>
+
+                        {task.dueDate && (
+                          <span className="text-xs text-muted-foreground">
+                            {format(task.dueDate, "PPPP")}
+                          </span>
+                        )}
+                      </div>
+                    </Link>
+                  </Card>
+                ))}
+
+                {todoTasks.length === 0 && (
+                  <div className="p-4 text-center text-sm text-muted-foreground">
+                    No tasks found
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center justify-between">
+                  In Progress
+                  <Badge variant={"outline"}>{inProgressTasks?.length}</Badge>
+                </CardTitle>
+              </CardHeader>
+
+              <CardContent className="p-3 space-y-3 max-h-[600px] overflow-y-auto">
+                {inProgressTasks.map((task) => (
+                  <Card
+                    key={task._id}
+                    className="hover:shadow-md transition-shadow px-2 "
+                  >
+                    <Link
+                      to={`/workspaces/${task.project.workspace}/projects/${task.project._id}/task/${task._id}`}
+                      className="block"
+                    >
+                      <h3 className="font-medium"> {task.title}</h3>
+                      <p className="text-sm text-muted-foreground line-clamp-3">
+                        {task.description || "No description "}
+                      </p>
+
+                      <div className="flex items-center mt-2 gap-2">
+                        <Badge
+                          variant={
+                            task.priority === "High"
+                              ? "destructive"
+                              : "secondary"
+                          }
+                        >
+                          {task.priority}
+                        </Badge>
+
+                        {task.dueDate && (
+                          <span className="text-xs text-muted-foreground">
+                            {format(task.dueDate, "PPPP")}
+                          </span>
+                        )}
+                      </div>
+                    </Link>
+                  </Card>
+                ))}
+
+                {inProgressTasks.length === 0 && (
+                  <div className="p-4 text-center text-sm text-muted-foreground">
+                    No tasks found
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center justify-between">
+                  Done
+                  <Badge variant={"outline"}>{doneTasks?.length}</Badge>
+                </CardTitle>
+              </CardHeader>
+
+              <CardContent className="p-3 space-y-3 max-h-[600px] overflow-y-auto">
+                {doneTasks.map((task) => (
+                  <Card
+                    key={task._id}
+                    className="hover:shadow-md transition-shadow px-2 "
+                  >
+                    <Link
+                      to={`/workspaces/${task.project.workspace}/projects/${task.project._id}/task/${task._id}`}
+                      className="block"
+                    >
+                      <h3 className="font-medium"> {task.title}</h3>
+                      <p className="text-sm text-muted-foreground line-clamp-3">
+                        {task.description || "No description "}
+                      </p>
+
+                      <div className="flex items-center mt-2 gap-2">
+                        <Badge
+                          variant={
+                            task.priority === "High"
+                              ? "destructive"
+                              : "secondary"
+                          }
+                        >
+                          {task.priority}
+                        </Badge>
+
+                        {task.dueDate && (
+                          <span className="text-xs text-muted-foreground">
+                            {format(task.dueDate, "PPPP")}
+                          </span>
+                        )}
+                      </div>
+                    </Link>
+                  </Card>
+                ))}
+
+                {doneTasks.length === 0 && (
+                  <div className="p-4 text-center text-sm text-muted-foreground">
+                    No tasks found
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+          </div>
+        </TabsContent>
+      </Tabs>
     </div>
   );
 };
