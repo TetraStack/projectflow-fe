@@ -17,12 +17,12 @@ export const useGetWorkspaces = () => {
     })
 }
 
-// export const useGetWorkSpaceDetails = (workspaceId: string) => {
-//     return useQuery({
-//         queryFn: async () => getData(`/workspace/${workspaceId}`),
-//         queryKey: ['workspace', workspaceId]
-//     })
-// }
+export const useGetWorkSpaceDetails = (workspaceId: string) => {
+    return useQuery({
+        queryFn: async () => getData(`/workspace/${workspaceId}`),
+        queryKey: ['workspace', workspaceId]
+    })
+}
 
 export const useGetWorkspaceProjects = (workspaceId: string) => {
     return useQuery({

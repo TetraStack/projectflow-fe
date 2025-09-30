@@ -31,6 +31,9 @@ const SidebarNav: React.FC<Props> = ({
     <nav className={cn("flex flex-col gap-y-2", className)} {...props}>
       {items.map(({title, href, icon}) => {
         const Icon = icon;
+
+        console.log("href=====>", href);
+        console.log("location.pathname=====>", location.pathname);
         const isActive = location.pathname === href;
         const handleOnclick = () => {
           if (href === "/workspaces") {
