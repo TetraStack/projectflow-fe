@@ -44,6 +44,8 @@ import {
 import {Badge} from "@/components/ui/badge";
 import {format} from "date-fns";
 import {useGetWorkSpaceDetails} from "@/hooks/use-workspace";
+import {Avatar, AvatarFallback} from "@/components/ui/avatar";
+import {AvatarImage} from "@radix-ui/react-avatar";
 
 interface Props {}
 
@@ -133,7 +135,40 @@ const Members: React.FC<Props> = () => {
             <CardContent>
               <div className="divider-y">
                 {filteredMembers?.map((member) => (
-                  <div key={member.user._id}></div>
+                  <div
+                    key={member.user._id}
+                    className="flex flex-col md:flex-row items-center justify-between p-4 gap-3"
+                  >
+                    <div className="flex items-center space-x-4">
+                      <Avatar>
+                        <AvatarImage src={member.user.profilePicture} />
+                        <AvatarFallback className="bg-primary/20">
+                          {member.user.name.charAt(0)}
+                        </AvatarFallback>
+                      </Avatar>
+
+                      <div>
+                        <p className="font-medium">{member.user.name}</p>
+                        <p className="text-sm text-muted-foreground">
+                          {member.user.email}
+                        </p>
+                      </div>
+                    </div>
+                    <div className="flex items-center space-x-1 ml-11 md:ml-0">
+                      <Badge
+                        className="capitalize"
+                        variant={
+                          ["admin", "owner"].includes(member.role)
+                            ? "destructive"
+                            : "secondary"
+                        }
+                      >
+                        {member.role}
+                      </Badge>
+
+                      <Badge variant={"outline"}>{data.name}</Badge>
+                    </div>
+                  </div>
                 ))}
 
                 {filteredMembers?.length === 0 && (
@@ -146,7 +181,38 @@ const Members: React.FC<Props> = () => {
           </Card>
         </TabsContent>
         <TabsContent value="board">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 select-none"></div>
+          <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 select-none">
+            {filteredMembers.map((member) => (
+              <Card key={member.user._id}>
+                <CardContent className="p-6 flex flex-col items-center">
+                  <Avatar className="size-20 mb-4">
+                    <AvatarImage src={member.user.profilePicture} />
+                    <AvatarFallback className="bg-primary/20">
+                      {member.user.name.charAt(0)}
+                    </AvatarFallback>
+                  </Avatar>
+
+                  <h3 className="text-lg font-medium mb-2">
+                    {member.user.name}
+                  </h3>
+                  <p className="text-md text-muted-foreground mb-4">
+                    {member.user.email}
+                  </p>
+
+                  <Badge
+                    className="capitalize"
+                    variant={
+                      ["admin", "owner"].includes(member.role)
+                        ? "destructive"
+                        : "secondary"
+                    }
+                  >
+                    {member.role}
+                  </Badge>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
         </TabsContent>
       </Tabs>
     </div>
