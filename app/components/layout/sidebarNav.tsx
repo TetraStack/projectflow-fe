@@ -32,8 +32,6 @@ const SidebarNav: React.FC<Props> = ({
       {items.map(({title, href, icon}) => {
         const Icon = icon;
 
-        console.log("href=====>", href);
-        console.log("location.pathname=====>", location.pathname);
         const isActive = location.pathname === href;
         const handleOnclick = () => {
           if (href === "/workspaces") {

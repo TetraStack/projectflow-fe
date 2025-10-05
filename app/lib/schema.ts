@@ -59,3 +59,8 @@ export const createTaskSchema = z.object({
     assignees: z.array(z.string()).min(1, "At least one assignee is required").optional(),
 })
 
+export const inviteMemberSchema = z.object({
+    email: z.email(),
+    role: z.enum(["admin", "member", "viewer"])
+})
+

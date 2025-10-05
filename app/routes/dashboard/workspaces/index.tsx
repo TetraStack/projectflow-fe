@@ -1,17 +1,17 @@
-import { Button } from "@/components/ui/button";
+import {Button} from "@/components/ui/button";
 import Loader from "@/components/ui/loader";
 import CreateWorkspace from "@/components/workspace/create-workspace";
 import NoDataFound from "@/components/workspace/no-data-found";
 import WorkspaceCard from "@/components/workspace/workspace-card";
-import { useGetWorkspaces } from "@/hooks/use-workspace";
-import type { Workspace } from "@/types";
-import { PlusCircleIcon } from "lucide-react";
+import {useGetWorkspaces} from "@/hooks/use-workspace";
+import type {Workspace} from "@/types";
+import {PlusCircleIcon} from "lucide-react";
 
-import React, { useState } from "react";
+import React, {useState} from "react";
 
 const Workspaces = () => {
   const [isCreatingWorkspace, setIsCreatingWorkspace] = useState(false);
-  const { data: workspaces, isLoading } = useGetWorkspaces() as {
+  const {data: workspaces, isLoading} = useGetWorkspaces() as {
     data: Workspace[];
     isLoading: boolean;
   };
@@ -20,7 +20,7 @@ const Workspaces = () => {
 
   return (
     <>
-      <div className="space-y-8">
+      <div className="space-y-8 ">
         <div className="flex items-center justify-between">
           <h2 className="text-xl md:text-3xl font-semibold">Workspaces</h2>
           <Button

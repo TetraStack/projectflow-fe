@@ -37,3 +37,13 @@ export const useDashBoardData = (workspaceId: string) => {
         queryFn: async () => getData(`workspace/${workspaceId}/stats`)
     })
 }
+
+export const useInviteMemberMutation = () => {
+    return useMutation({
+        mutationFn: async (data: {
+            email: string,
+            role: string,
+            workspaceId: string
+        }) => postData(`/workspace/${data.workspaceId}/invitemember`, { email: data.email, role: data.role })
+    })
+}
