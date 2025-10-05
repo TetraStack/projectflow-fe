@@ -47,3 +47,18 @@ export const useInviteMemberMutation = () => {
         }) => postData(`/workspace/${data.workspaceId}/invitemember`, { email: data.email, role: data.role })
     })
 }
+
+export const useAcceptInviteByTokenMutation = () => {
+    return useMutation({
+
+        mutationFn: async (token: string) => postData(`/workspace/accept-invite-token`, {
+            token
+        })
+    })
+}
+export const useAcceptGenerateInviteMutation = () => {
+    return useMutation({
+
+        mutationFn: async (workspaceId: string) => postData(`/workspace/${workspaceId}/accept-general-invite`)
+    })
+}
