@@ -49,14 +49,14 @@ const WorkspaceDetails = () => {
         workspaceId={workspaceId}
         isCreatingProject={isCreateProject}
         setIsCreatingProject={setIsCreateProject}
-        workspaceMembers={data.workspace.members}
+        workspaceMembers={data.workspace?.members}
       />
 
       <InviteMemberDialog
         isOpen={isInviteMember}
         onOpenChange={setIsInviteMember}
         workspaceId={workspaceId}
-        workspaceMembers={data.workspace.members}
+        workspaceMembers={data.workspace?.members}
       />
     </div>
   );

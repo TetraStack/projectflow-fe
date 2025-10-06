@@ -72,7 +72,7 @@ const Members: React.FC<Props> = () => {
     isLoading: boolean;
   };
 
-  const filteredMembers = data?.members.filter(
+  const filteredMembers = data?.members?.filter(
     (member) =>
       member.user.name.toLowerCase().includes(search.toLowerCase()) ||
       member.user.email.toLowerCase().includes(search.toLowerCase()) ||
