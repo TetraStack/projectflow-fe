@@ -261,10 +261,10 @@ const Profile: React.FC<Props> = () => {
           <CardDescription>Update your password.</CardDescription>
         </CardHeader>
         <CardContent>
-          <Form {...profileForm}>
+          <Form {...form}>
             <form
               className="grid gap-4"
-              onSubmit={profileForm.handleSubmit(handlePasswordChange)}
+              onSubmit={form.handleSubmit(handlePasswordChange)}
             >
               <div className="grid gap-2">
                 <FormField
