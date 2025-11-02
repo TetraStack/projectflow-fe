@@ -442,7 +442,8 @@ const Homepage = () => {
         </motion.div>
       </section>
 
-      <section className="px-4 py-20 bg-muted/30">
+      {/* testimonials */}
+      {/* <section className="px-4 py-20 bg-muted/30">
         <div className="container mx-auto">
           {" "}
           <motion.div
@@ -499,9 +500,10 @@ const Homepage = () => {
             </div>
           </motion.div>
         </div>
-      </section>
+      </section> */}
 
-      <section className="container mx-auto px-4 py-20">
+      {/* price table */}
+      {/* <section className="container mx-auto px-4 py-20">
         <motion.div
           variants={containerVariants}
           initial="hidden"
@@ -598,8 +600,9 @@ const Homepage = () => {
             ))}
           </div>
         </motion.div>
-      </section>
+      </section> */}
 
+      {/* cta */}
       <section className=" px-4 py-20 bg-muted/30">
         <div className="container mx-auto">
           <motion.div
